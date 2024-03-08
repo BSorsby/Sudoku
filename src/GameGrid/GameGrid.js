@@ -98,8 +98,14 @@ export const GameGrid = () => {
             if (!$('.clicked').hasClass('original')) {
                 let id = $('.clicked').attr('id');
                 let currentVal = $('#' + id).html();
-                validateEntry(num);
-                updateMoves(id, num, currentVal);
+                if (currentVal === num) {
+                    $('.cell').removeClass('sameNumbers');
+                    $('#' + id).html('');
+                    updateMoves(id, '', currentVal);
+                } else {
+                    validateEntry(num);
+                    updateMoves(id, num, currentVal);
+                }
             }
         } else {
             return;
