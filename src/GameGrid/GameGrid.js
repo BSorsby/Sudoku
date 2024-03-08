@@ -103,7 +103,7 @@ export const GameGrid = () => {
                     $('#' + id).html('');
                     updateMoves(id, '', currentVal);
                 } else {
-                    validateEntry(num);
+                    validateEntry(id, num);
                     updateMoves(id, num, currentVal);
                 }
             }
@@ -149,17 +149,17 @@ export const GameGrid = () => {
             setMoves(moves);
             if (val !== '') {
                 highlightSameNumbers(val);
-                validateEntry(val);
+                validateEntry(cell, val);
             } else {
                 $('.cell').removeClass('sameNumbers')
             }
         }
     }
 
-    function validateEntry(num) {
-        let id = $('.clicked').attr('id');
+    function validateEntry(id, num) {
+        // let id = $('.clicked').attr('id');
         let index = ((parseInt(id[0]) - 1) * 9) + (parseInt(id[2] - 1));
-        $('.clicked').html(num);
+        $('#' + id).html(num);
         if (completedGame[index] === num) {
             $('.clicked').addClass('correct').removeClass('incorrect');
         } else {
