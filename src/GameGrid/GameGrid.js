@@ -147,17 +147,20 @@ export const GameGrid = () => {
             let val = lastMove['prevValue'];
             $('#' + cell).html(val);
             setMoves(moves);
+            removeHighlights();
+            $('#' + cell).addClass('clicked');
+            highlightAreas(cell);
+            highlightSameNumbers(val);
             if (val !== '') {
                 highlightSameNumbers(val);
                 validateEntry(cell, val);
             } else {
-                $('.cell').removeClass('sameNumbers')
+                $('.cell').removeClass('sameNumbers');
             }
         }
     }
 
     function validateEntry(id, num) {
-        // let id = $('.clicked').attr('id');
         let index = ((parseInt(id[0]) - 1) * 9) + (parseInt(id[2] - 1));
         $('#' + id).html(num);
         if (completedGame[index] === num) {
