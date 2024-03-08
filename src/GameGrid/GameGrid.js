@@ -20,6 +20,11 @@ export const GameGrid = () => {
         FillBoard();
     }, [puzzle]);
 
+    const handleNewGameClick = () => {
+        resetBoard();
+        generateGame(level);
+    }
+
     const generateGame = (difficulty) => {
         const newGame = Sudoku.generate(difficulty);
         const completedGame = Sudoku.solve(newGame);
@@ -32,9 +37,11 @@ export const GameGrid = () => {
     }
 
     const resetBoard = () => {
-        $('.cell').removeClass('original');
+        $('.cell').removeClass('original').removeClass('clicked').removeClass('correct')
+            .removeClass('incorrect').removeClass('highlight').removeClass('sameNumbers');
         $('.cell').html('');
-
+        setHints(3);
+        setMoves([]);
     }
 
     const FillBoard = () => {
@@ -250,7 +257,7 @@ export const GameGrid = () => {
                 <div className="cell box-9" id="9-9" onClick={(e) => cellClick(e)}></div>
 
             </div>
-            <KeyBoard handleNumberClick={handleNumberClick} handleEraseClick={handleEraseClick} handleHintClick={handleHintClick} hints={hints} handleUndoClick={handleUndoClick} />
+            <KeyBoard handleNewGameClick={handleNewGameClick} handleNumberClick={handleNumberClick} handleEraseClick={handleEraseClick} handleHintClick={handleHintClick} hints={hints} handleUndoClick={handleUndoClick} />
         </div>
     )
 }

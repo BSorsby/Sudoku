@@ -5,6 +5,7 @@ import { useState } from "react";
 import $ from 'jquery';
 
 export function KeyBoard({
+    handleNewGameClick,
     handleNumberClick,
     handleEraseClick,
     handleUndoClick,
@@ -36,7 +37,7 @@ export function KeyBoard({
     }
 
     function newGameClick() {
-
+        handleNewGameClick();
     }
 
     return (
