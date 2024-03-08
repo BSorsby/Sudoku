@@ -1,8 +1,8 @@
+import $ from 'jquery';
 import { useEffect, useState } from "react";
 import Sudoku from "sudoku-umd";
-import "./GameGrid.css";
 import { KeyBoard } from "../KeyBoard/KeyBoard";
-import $ from 'jquery';
+import "./GameGrid.css";
 
 export const GameGrid = () => {
 
@@ -10,6 +10,7 @@ export const GameGrid = () => {
     const [completedGame, setCompletedGame] = useState();
     const [level, setLevel] = useState('easy');
     const [hints, setHints] = useState(3);
+    const [moves, setMoves] = useState([]);
 
     useEffect(() => {
         generateGame(level);
@@ -88,18 +89,26 @@ export const GameGrid = () => {
     function handleNumberClick(num) {
         if ($('.cell').hasClass('clicked')) {
             if (!$('.clicked').hasClass('original')) {
-                $('.clicked').html(num);
+                let id = $('.clicked').attr('id');
+                let currentVal = $('#' + id).html();
                 validateEntry(num);
+                updateMoves(id, num, currentVal);
             }
         } else {
             return;
         }
     }
 
+    function updateMoves(id, newVal, prevVal) {
+        setMoves([...moves, { cell: id, newValue: newVal, prevValue: prevVal }]);
+    }
+
     function handleEraseClick() {
         if ($('.cell').hasClass('clicked')) {
             if (!$('.clicked').hasClass('original')) {
+                let prevVal = $('.clicked').html();
                 $('.clicked').html('');
+                updateMoves($('.clicked').attr('id'), '', prevVal);
             }
         }
     }
@@ -118,9 +127,26 @@ export const GameGrid = () => {
         }
     }
 
+    function handleUndoClick() {
+        if (moves.length > 0) {
+            let lastMove = moves.pop();
+            let cell = lastMove['cell'];
+            let val = lastMove['prevValue'];
+            $('#' + cell).html(val);
+            setMoves(moves);
+            if (val !== '') {
+                highlightSameNumbers(val);
+                validateEntry(val);
+            } else {
+                $('.cell').removeClass('sameNumbers')
+            }
+        }
+    }
+
     function validateEntry(num) {
         let id = $('.clicked').attr('id');
         let index = ((parseInt(id[0]) - 1) * 9) + (parseInt(id[2] - 1));
+        $('.clicked').html(num);
         if (completedGame[index] === num) {
             $('.clicked').addClass('correct').removeClass('incorrect');
         } else {
@@ -129,8 +155,9 @@ export const GameGrid = () => {
         highlightSameNumbers(num);
     }
 
+
     return (
-        <div>
+        <div className='gameGrid'>
             <div className="outerBox">
                 <div className="cell box-1" id="1-1" onClick={(e) => cellClick(e)}></div>
                 <div className="cell box-1" id="1-2" onClick={(e) => cellClick(e)}></div>
@@ -223,7 +250,7 @@ export const GameGrid = () => {
                 <div className="cell box-9" id="9-9" onClick={(e) => cellClick(e)}></div>
 
             </div>
-            <KeyBoard handleNumberClick={handleNumberClick} handleEraseClick={handleEraseClick} handleHintClick={handleHintClick} hints={hints} />
+            <KeyBoard handleNumberClick={handleNumberClick} handleEraseClick={handleEraseClick} handleHintClick={handleHintClick} hints={hints} handleUndoClick={handleUndoClick} />
         </div>
     )
 }

@@ -1,3 +1,9 @@
+.gameGrid {
+    display: flex;
+    margin: auto;
+    max-width: fit-content;
+}
+
 .outerBox {
     border: 1px solid black;
     display: grid;
@@ -69,6 +75,7 @@
 
 .clicked {
     background-color: rgb(255, 215, 232);
+    border: 0.25px solid rgb(0, 0, 0);
 }
 
 .sameNumbers {

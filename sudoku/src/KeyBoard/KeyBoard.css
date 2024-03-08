@@ -1,5 +1,5 @@
 .KeyBoard {
-    margin-top: 50px;
+    margin-left: 50px;
 }
 
 .gameControls {
@@ -25,7 +25,7 @@
 }
 
 .control:hover .icon {
-    background-color: rgb(220, 195, 164);
+    background-color: rgb(245, 217, 183);
     color: rgb(43, 43, 43);
 }
 
@@ -45,8 +45,8 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    grid-column-gap: 2px;
-    grid-row-gap: 2px;
+    grid-column-gap: 4px;
+    grid-row-gap: 4px;
     max-width: fit-content;
 }
 
@@ -60,8 +60,23 @@
     justify-content: center;
     align-items: center;
     color: rgb(41, 41, 41);
+    cursor: pointer;
 }
 
 .numberBtn:hover {
     background-color: rgb(255, 215, 232);
+}
+
+.newGame {
+    font-size: 40px;
+    background-color: bisque;
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.newGame:hover {
+    background-color: rgb(245, 217, 183);
+    color: rgb(43, 43, 43);
 }

@@ -7,6 +7,7 @@ import $ from 'jquery';
 export function KeyBoard({
     handleNumberClick,
     handleEraseClick,
+    handleUndoClick,
     handleHintClick,
     hints
 }) {
@@ -21,6 +22,10 @@ export function KeyBoard({
         handleEraseClick();
     }
 
+    function undoClick() {
+        handleUndoClick();
+    }
+
     function hintClick() {
         if (hints > 0) {
             if (hints === 1) {
@@ -28,13 +33,16 @@ export function KeyBoard({
             }
             handleHintClick();
         }
+    }
+
+    function newGameClick() {
 
     }
 
     return (
         <div className="KeyBoard">
             <div className="gameControls">
-                <div className="control" id="undo">
+                <div className="control" id="undo" onClick={undoClick}>
                     <AiOutlineUndo className="icon" />
                     Undo
                 </div>
@@ -57,6 +65,10 @@ export function KeyBoard({
                 <div className="numberBtn" id="7" onClick={(e) => numberClick(e)}>7</div>
                 <div className="numberBtn" id="8" onClick={(e) => numberClick(e)}>8</div>
                 <div className="numberBtn" id="9" onClick={(e) => numberClick(e)}>9</div>
+            </div>
+
+            <div className="newGame" onClick={newGameClick}>
+                New Game
             </div>
 
         </div>
