@@ -121,6 +121,7 @@ export const GameGrid = () => {
             if (!$('.clicked').hasClass('original')) {
                 let prevVal = $('.clicked').html();
                 $('.clicked').html('');
+                $('.cell').removeClass('sameNumbers');
                 updateMoves($('.clicked').attr('id'), '', prevVal);
             }
         }
