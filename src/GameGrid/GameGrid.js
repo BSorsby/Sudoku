@@ -12,13 +12,15 @@ export const GameGrid = () => {
     const [hints, setHints] = useState(3);
     const [moves, setMoves] = useState([]);
 
-    useEffect(() => {
-        generateGame(level);
-    }, []);
+    // useEffect(() => {
+    //     generateGame(level);
+    // }, []);
 
     useEffect(() => {
         FillBoard();
     }, [puzzle]);
+
+
 
     const handleNewGameClick = () => {
         resetBoard();
@@ -35,6 +37,30 @@ export const GameGrid = () => {
 
         return newGame;
     }
+
+    useEffect(() => {
+        const onKeyDown = (e) => {
+            if (!isNaN(e.key) && e.key !== "0") {
+                handleNumberClick(e.key);
+            }
+            if (e.keyCode === 37) {
+                moveClicked('left');
+            } else if (e.keyCode === 38) {
+                moveClicked('up');
+            } else if (e.keyCode === 39) {
+                moveClicked('right');
+            } else if (e.keyCode === 40) {
+                moveClicked('down');
+            }
+
+            if (e.key === 'Backspace' || e.key === 'Delete') {
+                handleEraseClick();
+            }
+        }
+
+        window.addEventListener('keydown', onKeyDown)
+        return () => window.removeEventListener('keydown', onKeyDown)
+    }, [generateGame])
 
     const resetBoard = () => {
         $('.cell').removeClass('original').removeClass('clicked').removeClass('correct')
@@ -65,6 +91,33 @@ export const GameGrid = () => {
         removeHighlights();
         let id = e.target.id;
         highlightAreas(id);
+    }
+
+    const moveClicked = (direction) => {
+        if ($('.cell').hasClass('clicked')) {
+            let currentCell = $('.clicked').attr('id');
+            let row = currentCell[0];
+            let col = currentCell[2];
+            if (direction === 'up' && row > 1) {
+                let id = (parseInt(row) - 1).toString() + '-' + col;
+                removeHighlights();
+                highlightAreas(id);
+            } else if (direction === 'left' && col > 1) {
+                let id = row + '-' + (parseInt(col) - 1);
+                removeHighlights();
+                highlightAreas(id);
+            } else if (direction === 'right' && col < 9) {
+                let id = row + '-' + (parseInt(col) + 1);
+                removeHighlights();
+                highlightAreas(id);
+            } else if (direction === 'down' && row < 9) {
+                let id = (parseInt(row) + 1).toString() + '-' + col;
+                removeHighlights();
+                highlightAreas(id);
+            } else {
+                return;
+            }
+        }
     }
 
     const highlightAreas = (id) => {
