@@ -51,7 +51,7 @@ export function KeyBoard({
                     <BsEraserFill className="icon" />
                     Erase
                 </div>
-                <div className="control" id="hint" onClick={hintClick}>
+                <div className="control" data-testid="hint-id" id="hint" onClick={hintClick}>
                     <BsLightbulb className="icon" />
                     Hint - {hints}
                 </div>
@@ -75,3 +75,5 @@ export function KeyBoard({
         </div>
     )
 }
+
+export default KeyBoard;
