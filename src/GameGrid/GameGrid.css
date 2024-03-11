@@ -76,6 +76,7 @@
 .clicked {
     background-color: rgb(255, 215, 232);
     border: 0.25px solid rgb(0, 0, 0);
+    font-weight: bold;
 }
 
 .sameNumbers {

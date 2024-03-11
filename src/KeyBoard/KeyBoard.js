@@ -1,8 +1,7 @@
-import { BsEraserFill, BsLightbulb } from "react-icons/bs";
-import { AiOutlineUndo } from "react-icons/ai";
-import "./KeyBoard.css";
-import { useState } from "react";
 import $ from 'jquery';
+import { AiOutlineUndo } from "react-icons/ai";
+import { BsEraserFill, BsLightbulb } from "react-icons/bs";
+import "./KeyBoard.css";
 
 export function KeyBoard({
     handleNewGameClick,
@@ -37,6 +36,7 @@ export function KeyBoard({
     }
 
     function newGameClick() {
+        $('#hint').removeClass('noHints');
         handleNewGameClick();
     }
 
