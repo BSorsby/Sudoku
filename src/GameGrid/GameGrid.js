@@ -4,11 +4,14 @@ import Sudoku from "sudoku-umd";
 import { KeyBoard } from "../KeyBoard/KeyBoard";
 import "./GameGrid.css";
 
-export const GameGrid = () => {
+export const GameGrid = ({
+    mistakesRemaining,
+    handleNewGame,
+    difficulty
+}) => {
 
     const [puzzle, setPuzzle] = useState('');
     const [completedGame, setCompletedGame] = useState();
-    const [level, setLevel] = useState('easy');
     const [hints, setHints] = useState(3);
     const [moves, setMoves] = useState([]);
 
@@ -20,11 +23,10 @@ export const GameGrid = () => {
         FillBoard();
     }, [puzzle]);
 
-
-
     const handleNewGameClick = () => {
         resetBoard();
-        generateGame(level);
+        generateGame(difficulty);
+        handleNewGame();
     }
 
     const generateGame = (difficulty) => {
@@ -178,7 +180,7 @@ export const GameGrid = () => {
                 updateMoves($('.clicked').attr('id'), '', prevVal);
             }
         }
-    }
+    };
 
     function handleHintClick() {
         if ($('.cell').hasClass('clicked')) {
@@ -192,7 +194,7 @@ export const GameGrid = () => {
                 setHints(hints - 1);
             }
         }
-    }
+    };
 
     function handleUndoClick() {
         if (moves.length > 0) {
@@ -221,6 +223,7 @@ export const GameGrid = () => {
             $('.clicked').addClass('correct').removeClass('incorrect');
         } else {
             $('.clicked').addClass('incorrect').removeClass('correct');
+            mistakesRemaining();
         }
         highlightSameNumbers(num);
     }
@@ -323,4 +326,6 @@ export const GameGrid = () => {
             <KeyBoard handleNewGameClick={handleNewGameClick} handleNumberClick={handleNumberClick} handleEraseClick={handleEraseClick} handleHintClick={handleHintClick} hints={hints} handleUndoClick={handleUndoClick} />
         </div>
     )
-}
+};
+
+export default GameGrid;

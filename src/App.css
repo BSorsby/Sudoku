@@ -6,3 +6,13 @@ h1 {
   font-size: 50px;
   font-weight: normal;
 }
+
+.gameSettings {
+  font-size: 30px;
+  display: flex;
+  margin: auto;
+  max-width: fit-content;
+  color: rgb(118, 66, 87);
+  column-gap: 30px;
+  text-transform: capitalize;
+}
