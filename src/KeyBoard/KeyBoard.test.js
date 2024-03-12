@@ -177,4 +177,4 @@ test("New Game Click event called", async () => {
     />)
     await userEvent.click(screen.getByText(/New Game/i));
     expect(mockHandleClick).toHaveBeenCalled();
-})
+});
