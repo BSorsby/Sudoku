@@ -16,3 +16,7 @@ h1 {
   column-gap: 30px;
   text-transform: capitalize;
 }
+
+.disabled {
+  display: none;
+}

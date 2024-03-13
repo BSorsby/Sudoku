@@ -7,6 +7,7 @@ import "./GameGrid.css";
 export const GameGrid = ({
     mistakesRemaining,
     handleNewGame,
+    handleGameWon,
     difficulty
 }) => {
 
@@ -14,10 +15,7 @@ export const GameGrid = ({
     const [completedGame, setCompletedGame] = useState();
     const [hints, setHints] = useState(3);
     const [moves, setMoves] = useState([]);
-
-    // useEffect(() => {
-    //     generateGame(level);
-    // }, []);
+    // const [gameWon, setGameWon] = useState(false);
 
     useEffect(() => {
         FillBoard();
@@ -27,7 +25,7 @@ export const GameGrid = ({
         resetBoard();
         generateGame(difficulty);
         handleNewGame();
-    }
+    };
 
     const generateGame = (difficulty) => {
         const newGame = Sudoku.generate(difficulty);
@@ -193,7 +191,8 @@ export const GameGrid = ({
                 highlightSameNumbers(num);
                 setHints(hints - 1);
             }
-        }
+            checkIfWon();
+        };
     };
 
     function handleUndoClick() {
@@ -221,6 +220,7 @@ export const GameGrid = ({
         $('#' + id).html(num);
         if (completedGame[index] === num) {
             $('.clicked').addClass('correct').removeClass('incorrect');
+            checkIfWon();
         } else {
             $('.clicked').addClass('incorrect').removeClass('correct');
             mistakesRemaining();
@@ -228,6 +228,18 @@ export const GameGrid = ({
         highlightSameNumbers(num);
     }
 
+    function checkIfWon() {
+        for (let i = 1; i < 10; i++) {
+            for (let j = 1; j < 10; j++) {
+                let index = (parseInt(i - 1) * 9) + (parseInt(j - 1));
+                let cellValue = $('#' + i + '-' + j);
+                if (completedGame[index] !== cellValue.html()) {
+                    return;
+                }
+            }
+        }
+        handleGameWon();
+    };
 
     return (
         <div className='gameGrid'>
